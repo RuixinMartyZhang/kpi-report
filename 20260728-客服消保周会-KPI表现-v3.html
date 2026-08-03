@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年7月28日 客服消保周会 — KPI表现</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", "PingFang SC", sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
+.container { max-width: 1300px; margin: 0 auto; padding: 20px; }
+.header { background: linear-gradient(135deg, #1a3a5c, #2E75B5); color: #fff; padding: 36px 40px; border-radius: 12px; margin-bottom: 24px; text-align: center; box-shadow: 0 4px 20px rgba(46,117,181,0.3); }
+.header h1 { font-size: 26px; margin-bottom: 8px; }
+.header .sub { font-size: 13px; opacity: 0.85; margin-top: 6px; }
+
+.section { background: #fff; border-radius: 10px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.section h2 { font-size: 20px; color: #1a3a5c; border-left: 4px solid #2E75B5; padding-left: 14px; margin-bottom: 18px; }
+
+/* 表格 */
+table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; table-layout: fixed; }
+th { background: #2E75B5; color: #fff; padding: 9px 6px; font-weight: 600; text-align: center; font-size: 11.5px; }
+td { padding: 8px 6px; border-bottom: 1px solid #e8ecf1; text-align: center; vertical-align: middle; }
+tr:hover td { background: #f0f5ff; }
+.cat-cell { font-weight: 600; color: #2E75B5; background: #f0f5ff; font-size: 12px; }
+.dist-cell { font-weight: 500; color: #444; background: #e8ecf1; font-size: 11.5px; }
+.name-cell { text-align: left !important; padding-left: 12px !important; line-height: 1.4 !important; }
+.name-cell .suffix { display: block; color: #666; font-size: 11px; margin-top: 2px; }
+.gray-bg { background: #e8ecf1; }
+.blank-row td { padding: 3px; background: #fafbfc; border: none; }
+#weekTable th:last-child, #weekTable td:last-child { width: 120px; min-width: 120px; max-width: 120px; }
+#monthTable th:nth-child(1), #monthTable td:nth-child(1) { width: 70px; }
+#monthTable th:nth-child(2), #monthTable td:nth-child(2) { width: 60px; }
+#monthTable th:nth-child(3), #monthTable td:nth-child(3) { width: 190px; min-width: 190px; max-width: 190px; }
+#monthTable th:nth-child(4), #monthTable td:nth-child(4) { width: 55px; }
+#monthTable th:nth-child(5), #monthTable td:nth-child(5) { width: 80px; }
+#monthTable th:nth-child(n+6), #monthTable td:nth-child(n+6) { width: 90px; }
+
+/* 颜色标记 */
+.up { color: #c0392b; font-weight: 600; }
+.down { color: #27ae60; font-weight: 600; }
+.over { color: #c0392b; font-weight: 600; }
+.good { color: #27ae60; font-weight: 600; }
+.tag-over { display: inline-block; background: #ffeaea; color: #c0392b; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.tag-good { display: inline-block; background: #e8f5e9; color: #27ae60; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.tag-na { display: inline-block; background: #f0f0f0; color: #888; padding: 2px 10px; border-radius: 10px; font-size: 11px; }
+.meet { background: #a5d6a7 !important; }
+
+/* 结论 */
+.conclusion { margin-top: 16px; padding: 14px 18px; background: #f8f9fb; border-radius: 8px; border-left: 4px solid #2E75B5; }
+.conclusion .item { margin-bottom: 6px; font-size: 13px; }
+.bullet-red { color: #c0392b; font-weight: 600; }
+.bullet-yellow { color: #e67e22; font-weight: 600; }
+.bullet-green { color: #27ae60; font-weight: 600; }
+
+.footnote { margin-top: 20px; padding: 14px 18px; background: #fffbe6; border-radius: 8px; font-size: 12px; color: #666; border: 1px solid #ffe58f; }
+.footnote strong { color: #e67e22; }
+
+.toc { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.toc a { background: #fff; color: #2E75B5; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-size: 13px; border: 1px solid #d0dbe8; transition: all 0.2s; }
+.toc a:hover { background: #2E75B5; color: #fff; border-color: #2E75B5; }
+
+@media (max-width: 768px) {
+    table { font-size: 10.5px; }
+    .section { padding: 16px; }
+}
+</style>
+</head>
+<body>
+<div class="container">
+
+<div class="header">
+  <h1>2026年7月28日 客服消保周会</h1>
+  <h1 style="font-size:20px;margin-top:2px;">核心KPI达成 — (一) KPI表现</h1>
+</div>
+
+<div class="toc">
+  <a href="#sec1">一、月度KPI达成</a>
+  <a href="#sec2">二、周度趋势</a>
+</div>
+
+<!-- 一、月度KPI达成 -->
+<div class="section" id="sec1">
+  <h2>一、月度KPI达成（MTD vs 全月）</h2>
+  <div style="overflow-x:auto;">
+    <table id="monthTable"></table>
+  </div>
+  <div style="font-size:12px; color:#888; margin:8px 0 0 12px;">注：标绿色底纹的格子达成当月目标值</div>
+  <div class="conclusion" id="monthConclusions"></div>
+</div>
+
+<!-- 二、周度趋势 -->
+<div class="section" id="sec2">
+  <h2>二、周度趋势（W23-W30）</h2>
+  <div style="overflow-x:auto;">
+    <table id="weekTable"></table>
+  </div>
+  <div class="conclusion" id="weekConclusions"></div>
+</div>
+
+</div>
+
+<script>
+const monthData = [{"cat": "部门KPI", "dist": "投诉类", "name": "外诉率", "weight": "30%", "target": "0.140%", "m7": "0.170%", "m7_meet": false, "m6": "0.175%", "m6_meet": false, "m5": "0.106%", "m5_meet": true, "full1": "0.195%", "full1_meet": false, "full2": "0.212%", "full2_meet": false, "full3": "0.236%", "full3_meet": false, "full4": "0.212%", "full4_meet": false, "full5": "0.113%", "full5_meet": true, "full6": "0.164%", "full6_meet": false, "diff76": "0.006%", "diff76_cls": "down", "diff_tgt": "+0.030%", "diff_tgt_cls": "over", "is_first_in_cat": true, "is_first_in_dist": true, "cat_span": 6, "dist_span": 2}, {"cat": "部门KPI", "dist": "投诉类", "name": "重渠投诉量（不含北互金）", "weight": "20%", "target": "1,445", "m7": "3,367", "m7_meet": false, "m6": "3,449", "m6_meet": false, "m5": "3,836", "m5_meet": false, "full1": "3,904", "full1_meet": false, "full2": "3,836", "full2_meet": false, "full3": "4,092", "full3_meet": false, "full4": "2,992", "full4_meet": false, "full5": "1,549", "full5_meet": true, "full6": "2,176", "full6_meet": true, "diff76": "82", "diff76_cls": "down", "diff_tgt": "+1,922", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "部门KPI", "dist": "运营类", "name": "7天外溢率(闭环)", "weight": "15%", "target": "0.34%", "m7": "0.74%", "m7_meet": false, "m6": "0.62%", "m6_meet": false, "m5": "0.62%", "m5_meet": false, "full1": "0.61%", "full1_meet": false, "full2": "0.61%", "full2_meet": false, "full3": "0.64%", "full3_meet": false, "full4": "0.59%", "full4_meet": false, "full5": "0.39%", "full5_meet": false, "full6": "0.41%", "full6_meet": false, "diff76": "+0.13%", "diff76_cls": "up", "diff_tgt": "+0.40%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 2}, {"cat": "部门KPI", "dist": "运营类", "name": "重渠7天重复投诉率(闭环)（不含北互金）", "weight": "15%", "target": "16.00%", "m7": "28.13%", "m7_meet": false, "m6": "30.44%", "m6_meet": false, "m5": "29.61%", "m5_meet": false, "full1": "30.75%", "full1_meet": false, "full2": "28.42%", "full2_meet": false, "full3": "19.63%", "full3_meet": false, "full4": "19.86%", "full4_meet": false, "full5": "16.46%", "full5_meet": false, "full6": "17.88%", "full6_meet": true, "diff76": "2.31%", "diff76_cls": "down", "diff_tgt": "+12.13%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "部门KPI", "dist": "效能类", "name": "5天关单率(闭环)", "weight": "10%", "target": "95.00%", "m7": "97.50%", "m7_meet": true, "m6": "98.36%", "m6_meet": true, "m5": "98.16%", "m5_meet": true, "full1": "98.51%", "full1_meet": true, "full2": "97.90%", "full2_meet": true, "full3": "96.18%", "full3_meet": true, "full4": "97.59%", "full4_meet": true, "full5": "99.26%", "full5_meet": true, "full6": "99.30%", "full6_meet": true, "diff76": "0.85%", "diff76_cls": "down", "diff_tgt": "+2.50%", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 2}, {"cat": "部门KPI", "dist": "效能类", "name": "热线20s接起率", "weight": "10%", "target": "95.00%", "m7": "98.72%", "m7_meet": true, "m6": "98.75%", "m6_meet": true, "m5": "96.67%", "m5_meet": true, "full1": "98.76%", "full1_meet": true, "full2": "96.95%", "full2_meet": true, "full3": "96.11%", "full3_meet": true, "full4": "96.19%", "full4_meet": true, "full5": "98.83%", "full5_meet": true, "full6": "99.45%", "full6_meet": true, "diff76": "0.03%", "diff76_cls": "down", "diff_tgt": "+3.72%", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "观测指标", "dist": "投诉类", "name": "外诉量", "weight": "-", "target": "11,531", "m7": "13,513", "m7_meet": false, "m6": "13,962", "m6_meet": false, "m5": "16,881", "m5_meet": false, "full1": "15,505", "full1_meet": false, "full2": "16,881", "full2_meet": false, "full3": "18,722", "full3_meet": false, "full4": "16,680", "full4_meet": false, "full5": "8,796", "full5_meet": true, "full6": "12,748", "full6_meet": false, "diff76": "449", "diff76_cls": "down", "diff_tgt": "+1,982", "diff_tgt_cls": "over", "is_first_in_cat": true, "is_first_in_dist": true, "cat_span": 5, "dist_span": 2}, {"cat": "观测指标", "dist": "投诉类", "name": "重渠投诉率（不含北互金）", "weight": "-", "target": "0.018%", "m7": "0.042%", "m7_meet": false, "m6": "0.043%", "m6_meet": false, "m5": "0.024%", "m5_meet": false, "full1": "0.049%", "full1_meet": false, "full2": "0.048%", "full2_meet": false, "full3": "0.052%", "full3_meet": false, "full4": "0.038%", "full4_meet": false, "full5": "0.020%", "full5_meet": true, "full6": "0.028%", "full6_meet": true, "diff76": "0.001%", "diff76_cls": "down", "diff_tgt": "+0.024%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "观测指标", "dist": "运营类", "name": "黑猫曝光率", "weight": "-", "target": "14.77%", "m7": "29.66%", "m7_meet": false, "m6": "28.10%", "m6_meet": false, "m5": "26.96%", "m5_meet": false, "full1": "27.77%", "full1_meet": false, "full2": "27.67%", "full2_meet": false, "full3": "31.00%", "full3_meet": false, "full4": "26.12%", "full4_meet": false, "full5": "19.26%", "full5_meet": false, "full6": "20.54%", "full6_meet": false, "diff76": "+1.56%", "diff76_cls": "up", "diff_tgt": "+14.89%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}, {"cat": "观测指标", "dist": "效能类", "name": "文本接起率", "weight": "-", "target": "98.00%", "m7": "99.94%", "m7_meet": true, "m6": "99.96%", "m6_meet": true, "m5": "99.72%", "m5_meet": true, "full1": "99.95%", "full1_meet": true, "full2": "99.74%", "full2_meet": true, "full3": "99.87%", "full3_meet": true, "full4": "98.19%", "full4_meet": true, "full5": "99.97%", "full5_meet": true, "full6": "99.63%", "full6_meet": true, "diff76": "0.02%", "diff76_cls": "down", "diff_tgt": "+1.94%", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}, {"cat": "观测指标", "dist": "监管维护", "name": "监管约谈次数", "weight": "-", "target": "0", "m7": "0", "m7_meet": true, "m6": "0", "m6_meet": true, "m5": "0", "m5_meet": true, "full1": "0", "full1_meet": true, "full2": "0", "full2_meet": true, "full3": "0", "full3_meet": true, "full4": "1", "full4_meet": false, "full5": "0", "full5_meet": true, "full6": "0", "full6_meet": true, "diff76": "0", "diff76_cls": "", "diff_tgt": "0", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}];
+const weekData = [{"cat": "部门KPI", "dist": "投诉类", "name": "外诉率", "w0": "0.043%", "w1": "0.050%", "w2": "0.038%", "w3": "0.046%", "w4": "0.043%", "w5": "0.048%", "w6": "0.049%", "w7": "0.047%", "wow": "-2.84%", "wow_cls": "down", "wow_abs": "-0.00%", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 16.1 L 17.9 3.0 L 32.7 25.0 L 47.6 11.3 L 62.4 15.7 L 77.3 7.2 L 92.1 6.0 L 107.0 8.5\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"16.1\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"11.3\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"15.7\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"7.2\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"6.0\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"8.5\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↑上升", "trend_cls": "up", "is_first_in_cat": true, "is_first_in_dist": true, "cat_span": 6, "dist_span": 2}, {"cat": "部门KPI", "dist": "投诉类", "name": "重渠投诉量（不含北互金）", "w0": "779", "w1": "1,105", "w2": "724", "w3": "841", "w4": "998", "w5": "1,001", "w6": "919", "w7": "904", "wow": "-1.63%", "wow_cls": "down", "wow_abs": "-15", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 21.8 L 17.9 3.0 L 32.7 25.0 L 47.6 18.2 L 62.4 9.2 L 77.3 9.0 L 92.1 13.7 L 107.0 14.6\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"21.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"18.2\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"9.2\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"9.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"13.7\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"14.6\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↑上升", "trend_cls": "up", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "部门KPI", "dist": "运营类", "name": "7天外溢率(闭环)", "w0": "0.74%", "w1": "0.71%", "w2": "0.66%", "w3": "0.74%", "w4": "0.74%", "w5": "0.86%", "w6": "0.89%", "w7": "-", "wow": "-", "wow_cls": "", "wow_abs": "-", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 17.2 L 17.9 20.3 L 32.7 25.0 L 47.6 17.6 L 62.4 17.3 L 77.3 6.7 L 92.1 3.0\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"17.2\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"20.3\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"17.6\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"17.3\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"6.7\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"3.0\" r=\"2\" fill=\"#666\"/></svg>", "trend": "-", "trend_cls": "", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 2}, {"cat": "部门KPI", "dist": "运营类", "name": "重渠7天重复投诉率(闭环)（不含北互金）", "w0": "31.96%", "w1": "31.25%", "w2": "26.42%", "w3": "32.34%", "w4": "29.68%", "w5": "28.84%", "w6": "27.19%", "w7": "-", "wow": "-", "wow_cls": "", "wow_abs": "-", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 4.4 L 17.9 7.1 L 32.7 25.0 L 47.6 3.0 L 62.4 12.9 L 77.3 16.0 L 92.1 22.1\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"4.4\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"7.1\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"12.9\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"16.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"22.1\" r=\"2\" fill=\"#666\"/></svg>", "trend": "-", "trend_cls": "", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "部门KPI", "dist": "效能类", "name": "5天关单率(闭环)", "w0": "98.26%", "w1": "98.09%", "w2": "98.54%", "w3": "99.15%", "w4": "97.70%", "w5": "96.94%", "w6": "98.12%", "w7": "98.18%", "wow": "+0.05%", "wow_cls": "up", "wow_abs": "0.05%", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 11.8 L 17.9 13.5 L 32.7 9.1 L 47.6 3.0 L 62.4 17.4 L 77.3 25.0 L 92.1 13.2 L 107.0 12.7\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"11.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"13.5\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"9.1\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"17.4\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"13.2\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"12.7\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↓下降", "trend_cls": "down", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 2}, {"cat": "部门KPI", "dist": "效能类", "name": "热线20s接起率", "w0": "99.24%", "w1": "98.08%", "w2": "98.61%", "w3": "99.26%", "w4": "98.62%", "w5": "98.35%", "w6": "99.22%", "w7": "98.66%", "wow": "-0.57%", "wow_cls": "down", "wow_abs": "-0.57%", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 3.5 L 17.9 25.0 L 32.7 15.0 L 47.6 3.0 L 62.4 14.9 L 77.3 20.0 L 92.1 3.7 L 107.0 14.2\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"3.5\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"15.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"14.9\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"20.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"3.7\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"14.2\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↓下降", "trend_cls": "down", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "观测指标", "dist": "投诉类", "name": "外诉量", "w0": "3,429", "w1": "4,007", "w2": "3,035", "w3": "3,642", "w4": "3,447", "w5": "3,820", "w6": "3,874", "w7": "3,764", "wow": "-2.84%", "wow_cls": "down", "wow_abs": "-110", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 16.1 L 17.9 3.0 L 32.7 25.0 L 47.6 11.3 L 62.4 15.7 L 77.3 7.2 L 92.1 6.0 L 107.0 8.5\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"16.1\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"11.3\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"15.7\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"7.2\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"6.0\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"8.5\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↑上升", "trend_cls": "up", "is_first_in_cat": true, "is_first_in_dist": true, "cat_span": 4, "dist_span": 2}, {"cat": "观测指标", "dist": "投诉类", "name": "重渠投诉率（不含北互金）", "w0": "0.010%", "w1": "0.014%", "w2": "0.009%", "w3": "0.011%", "w4": "0.013%", "w5": "0.013%", "w6": "0.012%", "w7": "0.011%", "wow": "-1.63%", "wow_cls": "down", "wow_abs": "-0.00%", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 21.8 L 17.9 3.0 L 32.7 25.0 L 47.6 18.2 L 62.4 9.2 L 77.3 9.0 L 92.1 13.7 L 107.0 14.6\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"21.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"18.2\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"9.2\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"9.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"13.7\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"14.6\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↑上升", "trend_cls": "up", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "观测指标", "dist": "运营类", "name": "黑猫曝光率", "w0": "27.24%", "w1": "29.04%", "w2": "27.64%", "w3": "26.85%", "w4": "32.59%", "w5": "30.40%", "w6": "26.99%", "w7": "1.21%", "wow": "-11.21%", "wow_cls": "down", "wow_abs": "-3.41%", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 6.8 L 17.9 5.5 L 32.7 6.5 L 47.6 7.0 L 62.4 3.0 L 77.3 4.5 L 92.1 6.9 L 107.0 25.0\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"6.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"5.5\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"6.5\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"7.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"4.5\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"6.9\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"25.0\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↓下降", "trend_cls": "down", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}, {"cat": "观测指标", "dist": "效能类", "name": "文本接起率", "w0": "100.00%", "w1": "99.92%", "w2": "99.98%", "w3": "99.92%", "w4": "99.89%", "w5": "99.94%", "w6": "99.97%", "w7": "99.99%", "wow": "+0.02%", "wow_cls": "up", "wow_abs": "0.02%", "sparkline": "<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 3.0 L 17.9 18.7 L 32.7 6.3 L 47.6 19.3 L 62.4 25.0 L 77.3 15.2 L 92.1 8.8 L 107.0 4.7\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"18.7\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"6.3\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"19.3\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"15.2\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"8.8\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"4.7\" r=\"2\" fill=\"#666\"/></svg>", "trend": "↓下降", "trend_cls": "down", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}];
+const monthConc = ["从月度KPI达成目标看，7月份至今，重渠7天重复投诉率绝对值下降2.6%，5天关单率（97.50%）及热线20s接起率（98.72%）均达成7月目标。"];
+const weekLabelsFull = ["2026年第23周", "2026年第24周", "2026年第25周", "2026年第26周", "2026年第27周", "2026年第28周", "2026年第29周", "2026年第30周"];
+const weekQj = ["2026-06-01~2026-06-07", "2026-06-08~2026-06-14", "2026-06-15~2026-06-21", "2026-06-22~2026-06-28", "2026-06-29~2026-07-05", "2026-07-06~2026-07-12", "2026-07-13~2026-07-19", "2026-07-20~2026-07-26"];
+const weekConc = ["从7月周度趋势上看，黑猫曝光率逐周下降，第29周数值相较前周下降超3.4%，7天外溢率略有提升但相较前周涨幅不明显。"];
+
+
+// ========== 月度表格（含rowspan） ==========
+function wrapName(name) {
+    if (name.includes('（不含北互金）')) {
+        return name.replace('（不含北互金）', '<span class="suffix">（不含北互金）</span>');
+    }
+    return name;
+}
+
+function renderMonthTable() {
+    const th = ['考核类型', '指标分类', '指标名称', '权重', '月目标', '26年7月MTD达成',
+                '26年6月MTD达成', '26年5月MTD达成', '26年6月全月达成', '26年5月全月达成',
+                '26年4月全月达成', '26年3月全月达成', '26年2月全月达成', '26年1月全月达成'];
+    let html = '<thead><tr>';
+    th.forEach(c => html += '<th>' + c + '</th>');
+    html += '</tr></thead><tbody>';
+
+    // 大类之间的视觉分隔
+    let lastCat = '';
+    monthData.forEach((r, i) => {
+        if (lastCat && r.cat !== lastCat) {
+            html += '<tr class="blank-row"><td colspan="15"></td></tr>';
+        }
+        lastCat = r.cat;
+
+        html += '<tr>';
+        if (r.is_first_in_cat) {
+            html += '<td class="cat-cell" rowspan="' + r.cat_span + '">' + r.cat + '</td>';
+        }
+        if (r.is_first_in_dist) {
+            html += '<td class="dist-cell" rowspan="' + r.dist_span + '">' + r.dist + '</td>';
+        }
+        html += '<td class="name-cell gray-bg">' + wrapName(r.name) + '</td>';
+        html += '<td class="gray-bg">' + r.weight + '</td>';
+        html += '<td style="font-weight:700;">' + r.target + '</td>';
+        html += '<td' + (r.m7_meet ? ' class="meet"' : '') + '>' + r.m7 + '</td>';
+        html += '<td' + (r.m6_meet ? ' class="meet"' : '') + '>' + r.m6 + '</td>';
+        html += '<td' + (r.m5_meet && r.name !== '外诉率' ? ' class="meet"' : '') + '>' + r.m5 + '</td>';
+        html += '<td' + (r.full1_meet ? ' class="meet"' : '') + '>' + r.full1 + '</td>';
+        html += '<td' + (r.full2_meet ? ' class="meet"' : '') + '>' + r.full2 + '</td>';
+        html += '<td' + (r.full3_meet ? ' class="meet"' : '') + '>' + r.full3 + '</td>';
+        html += '<td' + (r.full4_meet ? ' class="meet"' : '') + '>' + r.full4 + '</td>';
+        html += '<td' + (r.full5_meet ? ' class="meet"' : '') + '>' + r.full5 + '</td>';
+        html += '<td' + (r.full6_meet ? ' class="meet"' : '') + '>' + r.full6 + '</td>';
+        html += '</tr>';
+    });
+    html += '</tbody>';
+    document.getElementById('monthTable').innerHTML = html;
+}
+
+// ========== 月度结论 ==========
+function renderMonthConclusions() {
+    let html = '<strong style="font-size:14px;">▎月度KPI达成目标</strong><br>';
+    html += monthConc.join('<br>');
+    document.getElementById('monthConclusions').innerHTML = html;
+}
+
+// ========== 周度表格（含rowspan） ==========
+function renderWeekTable() {
+    const displayWeeks = weekLabelsFull.slice().reverse(); // 2026年第29周 .. 2026年第22周
+    const displayQj = weekQj.slice().reverse();
+    const latestWeek = displayWeeks[0];
+    const latestQj = displayQj[0];
+    const idxMap = [7,6,5,4,3,2,1,0]; // displayWeeks[j] 对应后端 weekData 的 w* 索引
+
+    const row1 = ['考核类型', '指标分类', '指标名称', 'Week VS Week<br>涨幅', 'Week VS Week<br>变化', ...displayWeeks, '<span style="display:inline-block;width:120px;">趋势图</span>'];
+    const row2 = ['', '', '', latestQj, latestQj, ...displayQj, ''];
+
+    let html = '<thead>';
+    // 第一行表头
+    html += '<tr>';
+    row1.forEach((c, i) => {
+        if (i < 3 || i === row1.length - 1) {
+            html += '<th rowspan="2">' + c + '</th>';
+        } else {
+            html += '<th>' + c + '</th>';
+        }
+    });
+    html += '</tr>';
+    // 第二行表头（日期区间）
+    html += '<tr>';
+    for (let i = 3; i < row1.length - 1; i++) {
+        html += '<th>' + row2[i] + '</th>';
+    }
+    html += '</tr>';
+    html += '</thead><tbody>';
+
+    let lastCat = '';
+    weekData.forEach((r, i) => {
+        if (lastCat && r.cat !== lastCat) {
+            html += '<tr class="blank-row"><td colspan="14"></td></tr>';
+        }
+        lastCat = r.cat;
+
+        html += '<tr>';
+        if (r.is_first_in_cat) {
+            html += '<td class="cat-cell" rowspan="' + r.cat_span + '">' + r.cat + '</td>';
+        }
+        if (r.is_first_in_dist) {
+            html += '<td class="dist-cell" rowspan="' + r.dist_span + '">' + r.dist + '</td>';
+        }
+        html += '<td class="name-cell">' + wrapName(r.name) + '</td>';
+        html += '<td class="' + r.wow_cls + '">' + r.wow + '</td>';
+        html += '<td class="' + r.wow_cls + '">' + r.wow_abs + '</td>';
+        idxMap.forEach(j => html += '<td>' + r['w' + j] + '</td>');
+        html += '<td style="width:120px; padding:4px;">' + (r.sparkline || '-') + '</td>';
+        html += '</tr>';
+    });
+    html += '</tbody>';
+    document.getElementById('weekTable').innerHTML = html;
+}
+
+// ========== 周度结论 ==========
+function renderWeekConclusions() {
+    let html = '<strong style="font-size:14px;">▎7月周度趋势</strong><br>';
+    html += weekConc.join('<br>');
+    document.getElementById('weekConclusions').innerHTML = html;
+}
+
+
+
+renderMonthTable();
+renderMonthConclusions();
+renderWeekTable();
+renderWeekConclusions();
+</script>
+
+</body>
+</html>

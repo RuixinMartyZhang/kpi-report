@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026年7月28日 客服消保周会 — KPI & CPD 合并版</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+/* ========== 全局基础 ========== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, "Microsoft YaHei", "PingFang SC", sans-serif; background: #f5f7fa; color: #333; line-height: 1.6; }
+.container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+
+/* 统一头部 */
+.header { background: linear-gradient(135deg, #1a3a5c, #2E75B5); color: #fff; padding: 36px 40px; border-radius: 12px; margin-bottom: 24px; text-align: center; box-shadow: 0 4px 20px rgba(46,117,181,0.3); }
+.header h1 { font-size: 26px; margin-bottom: 8px; }
+.header .sub { font-size: 13px; opacity: 0.85; margin-top: 6px; }
+
+/* 大板块分隔标题 */
+.part-header { font-size: 28px; font-weight: 800; color: #1a3a5c; margin: 36px 0 16px 4px; padding-left: 16px; border-left: 6px solid #2E75B5; letter-spacing: 0.5px; }
+.part-header:first-of-type { margin-top: 0; }
+
+/* section */
+.section { background: #fff; border-radius: 10px; padding: 28px 32px; margin-bottom: 20px; box-shadow: 0 2px 12px rgba(0,0,0,0.06); }
+.section h2 { font-size: 20px; color: #1a3a5c; border-left: 4px solid #2E75B5; padding-left: 14px; margin-bottom: 18px; }
+
+/* ========== KPI 表格默认样式 ========== */
+/* KPI 表格需要 table-layout:fixed，CPD 不需要，通过 #monthTable/#weekTable vs #cpdTable 区分 */
+#monthTable, #weekTable { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; table-layout: fixed; }
+th { background: #2E75B5; color: #fff; padding: 9px 6px; font-weight: 600; text-align: center; font-size: 11.5px; }
+td { padding: 8px 6px; border-bottom: 1px solid #e8ecf1; text-align: center; vertical-align: middle; }
+tr:hover td { background: #f0f5ff; }
+
+/* KPI 分类单元格（KPI 默认版本） */
+#monthTable .cat-cell, #weekTable .cat-cell { font-weight: 600; color: #2E75B5; background: #f0f5ff; font-size: 12px; }
+#monthTable .dist-cell, #weekTable .dist-cell { font-weight: 500; color: #444; background: #f8fafc; font-size: 11.5px; }
+#monthTable .name-cell, #weekTable .name-cell { text-align: center !important; padding-left: 6px !important; padding-right: 6px !important; line-height: 1.4 !important; vertical-align: middle !important; }
+#monthTable .name-cell .suffix, #weekTable .name-cell .suffix { display: block; color: #666; font-size: 11px; margin-top: 2px; }
+#weekTable th:last-child, #weekTable td:last-child { width: 120px; min-width: 120px; max-width: 120px; }
+#monthTable th:nth-child(1), #monthTable td:nth-child(1) { width: 70px; }
+#monthTable th:nth-child(2), #monthTable td:nth-child(2) { width: 60px; }
+#monthTable th:nth-child(3), #monthTable td:nth-child(3) { width: 190px; min-width: 190px; max-width: 190px; }
+#monthTable th:nth-child(4), #monthTable td:nth-child(4) { width: 55px; }
+#monthTable th:nth-child(5), #monthTable td:nth-child(5) { width: 80px; }
+#monthTable th:nth-child(n+6), #monthTable td:nth-child(n+6) { width: 90px; }
+
+/* KPI 颜色标记：up=上升=红色(坏), down=下降=绿色(好) */
+#monthTable .up, #weekTable .up { color: #c0392b; font-weight: 600; }
+#monthTable .down, #weekTable .down { color: #27ae60; font-weight: 600; }
+
+/* 周表方向感知颜色：good=向好(绿), bad=向差(红) */
+#weekTable .bad { color: #c0392b; font-weight: 600; }
+#weekTable .good { color: #27ae60; font-weight: 600; }
+
+.over { color: #c0392b; font-weight: 600; }
+.good { color: #27ae60; font-weight: 600; }
+
+/* ========== CPD 表格样式 (scoped) ========== */
+#cpdTable { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 12px; }
+#cpdTable td { padding: 6px 4px; border-bottom: 1px solid #e8ecf1; text-align: center; vertical-align: middle; }
+#cpdTable .cat-cell { font-weight: 600; color: #2E75B5; background: #f0f5ff; font-size: 12.5px; }
+#cpdTable .name-cell { text-align: center !important; font-weight: 600; background: #f0f5ff; padding-left: 6px !important; }
+#cpdTable .tgt-cell { font-weight: 600; background: #f0f5ff; }
+
+/* CPD 行灰底 */
+.gray-row td { background: #e8e8e8 !important; }
+.gray-row:hover td { background: #dcdcdc !important; }
+.gray-row .cat-cell { background: #d0d8e0 !important; color: #1a3a5c; }
+.gray-row .name-cell { background: #d0d8e0 !important; color: #1a3a5c; }
+.gray-row .tgt-cell { background: #d0d8e0 !important; color: #1a3a5c; }
+
+/* CPD 颜色标记：up=上升=绿色(好), down=下降=红色(坏) — 与KPI相反 */
+#cpdTable .up { color: #27ae60; font-weight: 600; }
+#cpdTable .down { color: #c0392b; font-weight: 600; }
+
+/* 通用空白行 */
+.blank-row td { padding: 3px; background: #fafbfc; border: none; }
+
+/* 状态标签 */
+.tag-over { display: inline-block; background: #ffeaea; color: #c0392b; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.tag-good { display: inline-block; background: #e8f5e9; color: #27ae60; padding: 2px 10px; border-radius: 10px; font-size: 11px; font-weight: 600; }
+.tag-na { display: inline-block; background: #f0f0f0; color: #888; padding: 2px 10px; border-radius: 10px; font-size: 11px; }
+.meet { background: #a5d6a7 !important; }
+
+/* 结论块 */
+.conclusion { margin-top: 16px; padding: 14px 18px; background: #f8f9fb; border-radius: 8px; border-left: 4px solid #2E75B5; }
+.conclusion .item { margin-bottom: 6px; font-size: 13px; }
+
+/* 结论颜色标记 */
+.bullet-red { color: #c0392b; font-weight: 600; }
+.bullet-yellow { color: #e67e22; font-weight: 600; }
+.bullet-green { color: #27ae60; font-weight: 600; }
+
+/* 目录 */
+.toc { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 20px; }
+.toc a { background: #fff; color: #2E75B5; padding: 8px 20px; border-radius: 20px; text-decoration: none; font-size: 13px; border: 1px solid #d0dbe8; transition: all 0.2s; }
+.toc a:hover { background: #2E75B5; color: #fff; border-color: #2E75B5; }
+
+@media (max-width: 768px) {
+    table { font-size: 10.5px; }
+    .section { padding: 16px; }
+}
+
+/* CPD 环比/目标差颜色：+绿 -红 */
+#cpdTable .cpd-up { color: #27ae60; font-weight: 600; }
+#cpdTable .cpd-down { color: #c0392b; font-weight: 600; }
+
+/* 月度KPI表：权重、月目标表头列加粗 */
+#monthTable th:nth-child(4),
+#monthTable th:nth-child(5) { font-weight: 800; }
+
+/* 月度KPI表：仅权重、月目标数据列加粗 */
+#monthTable .col-weight,
+#monthTable .col-target { font-weight: 600 !important; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<!-- ===== 统一头部 ===== -->
+<div class="header">
+  <h1>2026年7月28日 客服消保周会</h1>
+  <h1 style="font-size:20px;margin-top:2px;">部门核心KPI及各业务组CPD达成表现</h1>
+</div>
+
+<!-- ===== 统一目录 ===== -->
+<div class="toc">
+  <a href="#sec1">一、(1) KPI核心结论</a>
+  <a href="#sec2">一、(2) 月度KPI达成</a>
+  <a href="#sec3">一、(3) 周度趋势</a>
+  <a href="#sec4">二、(1) CPD核心结论</a>
+  <a href="#sec5">二、(2) CPD月度总览</a>
+</div>
+
+<!-- ===== Part A: KPI 达成表现 ===== -->
+<div class="part-header">一、KPI达成表现</div>
+
+<!-- 1(1) KPI核心结论（结论前置） -->
+<div class="section" id="sec1">
+  <h2>一、(1) KPI达成表现核心结论</h2>
+  <div class="conclusion" id="kpiConclusionsAll" style="margin-top:0;">
+    <strong style="font-size:15px;">▎月度核心结论</strong>
+    <div id="monthConclusions"></div>
+    <br>
+    <strong style="font-size:15px;">▎周度核心结论</strong>
+    <div id="weekConclusions"></div>
+  </div>
+</div>
+
+<!-- 1(2) 月度KPI达成 -->
+<div class="section" id="sec2">
+  <h2>一、(2) 月度KPI达成（MTD vs 全月）</h2>
+  <div style="overflow-x:auto;">
+    <table id="monthTable"></table>
+  </div>
+</div>
+
+<!-- 1(3) 周度趋势 -->
+<div class="section" id="sec3">
+  <h2>一、(3) 周度趋势（W23-W30）</h2>
+  <div style="overflow-x:auto;">
+    <table id="weekTable"></table>
+  </div>
+</div>
+
+<!-- ===== Part B: CPD 各业务线表现 ===== -->
+<div class="part-header">二、CPD各业务线表现</div>
+
+<!-- 2(1) CPD核心结论（结论前置） -->
+<div class="section" id="sec4">
+  <h2>二、(1) CPD核心结论</h2>
+  <div class="conclusion" style="margin-top:0;">
+    <strong style="font-size:14px;">CPD各业务线核心结论</strong><br>
+<div class="item"><strong>S1板块</strong>：S1热线全线达标；S1在线全线达标；S1存量全线未达标；S1双技能全线达标。
+  </div>
+</div>
+
+</div>
+
+<!-- 2(2) CPD月度达成总览 -->
+<div class="section" id="sec5">
+  <h2>二、(2) CPD月度达成总览（2026年01~07月）</h2>
+  <div style="overflow-x:auto;">
+    <table id="cpdTable">
+<thead><tr>
+<th>业务组</th>
+<th>子业务组</th>
+<th>目标</th>
+<th>环比上月</th>
+<th>与目标差</th>
+<th>2026年7月</th>
+<th>2026年6月</th>
+<th>2026年5月</th>
+<th>2026年4月</th>
+<th>2026年3月</th>
+<th>2026年2月</th>
+<th>2026年1月</th>
+<th>趋势图<br><span style="font-size:10px;font-weight:400;white-space:nowrap;">（从左往右，由远到近）</span></th>
+</tr></thead><tbody><tr><td class="cat-cell" rowspan="4">s1热线</td><td class="name-cell">整体</td><td class="tgt-cell">80</td><td><span class="cpd-down">-3</span></td><td><span class="cpd-up">+2</span></td><td><strong>82</strong></td><td>85</td><td>87</td><td>91</td><td>89</td><td>82</td><td>77</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 25.0 L 20.3 17.1 L 37.7 6.1 L 55.0 3.0 L 72.3 9.3 L 89.7 12.4 L 107.0 17.1" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="25.0" r="2" fill="#666"/><circle cx="20.3" cy="17.1" r="2" fill="#666"/><circle cx="37.7" cy="6.1" r="2" fill="#666"/><circle cx="55.0" cy="3.0" r="2" fill="#666"/><circle cx="72.3" cy="9.3" r="2" fill="#666"/><circle cx="89.7" cy="12.4" r="2" fill="#666"/><circle cx="107.0" cy="17.1" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">北海</td><td class="tgt-cell">80</td><td><span class="cpd-up">+1</span></td><td><span class="cpd-up">+3</span></td><td><strong>83</strong></td><td>82</td><td>79</td><td>89</td><td>92</td><td>86</td><td>79</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 25.0 L 20.3 13.2 L 37.7 3.0 L 55.0 8.1 L 72.3 25.0 L 89.7 19.9 L 107.0 18.2" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="25.0" r="2" fill="#666"/><circle cx="20.3" cy="13.2" r="2" fill="#666"/><circle cx="37.7" cy="3.0" r="2" fill="#666"/><circle cx="55.0" cy="8.1" r="2" fill="#666"/><circle cx="72.3" cy="25.0" r="2" fill="#666"/><circle cx="89.7" cy="19.9" r="2" fill="#666"/><circle cx="107.0" cy="18.2" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">海南</td><td class="tgt-cell">-</td><td>-</td><td>-</td><td><strong>50</strong></td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><circle cx="107" cy="25" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">非北海</td><td class="tgt-cell">80</td><td><span class="cpd-up">+2</span></td><td><span class="cpd-up">+7</span></td><td><strong>87</strong></td><td>85</td><td>87</td><td>92</td><td>89</td><td>81</td><td>77</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 25.0 L 20.3 19.1 L 37.7 7.4 L 55.0 3.0 L 72.3 10.3 L 89.7 13.3 L 107.0 10.3" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="25.0" r="2" fill="#666"/><circle cx="20.3" cy="19.1" r="2" fill="#666"/><circle cx="37.7" cy="7.4" r="2" fill="#666"/><circle cx="55.0" cy="3.0" r="2" fill="#666"/><circle cx="72.3" cy="10.3" r="2" fill="#666"/><circle cx="89.7" cy="13.3" r="2" fill="#666"/><circle cx="107.0" cy="10.3" r="2" fill="#666"/></svg></td></tr><tr><td class="cat-cell" rowspan="3">s1在线</td><td class="name-cell">整体</td><td class="tgt-cell">-</td><td><span class="cpd-up">+1</span></td><td>-</td><td><strong>204</strong></td><td>203</td><td>214</td><td>197</td><td>177</td><td>131</td><td>156</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 18.4 L 20.3 25.0 L 37.7 12.8 L 55.0 7.5 L 72.3 3.0 L 89.7 5.9 L 107.0 5.7" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="18.4" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="12.8" r="2" fill="#666"/><circle cx="55.0" cy="7.5" r="2" fill="#666"/><circle cx="72.3" cy="3.0" r="2" fill="#666"/><circle cx="89.7" cy="5.9" r="2" fill="#666"/><circle cx="107.0" cy="5.7" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">新疆</td><td class="tgt-cell">143</td><td><span class="cpd-up">+6</span></td><td><span class="cpd-up">+20</span></td><td><strong>163</strong></td><td>157</td><td>179</td><td>167</td><td>153</td><td>102</td><td>104</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 24.4 L 20.3 25.0 L 37.7 10.4 L 55.0 6.4 L 72.3 3.0 L 89.7 9.3 L 107.0 7.6" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="24.4" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="10.4" r="2" fill="#666"/><circle cx="55.0" cy="6.4" r="2" fill="#666"/><circle cx="72.3" cy="3.0" r="2" fill="#666"/><circle cx="89.7" cy="9.3" r="2" fill="#666"/><circle cx="107.0" cy="7.6" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">非新疆</td><td class="tgt-cell">239</td><td><span class="cpd-up">+8</span></td><td><span class="cpd-up">+15</span></td><td><strong>254</strong></td><td>246</td><td>238</td><td>216</td><td>188</td><td>148</td><td>183</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 17.7 L 20.3 25.0 L 37.7 16.7 L 55.0 10.9 L 72.3 6.3 L 89.7 4.7 L 107.0 3.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="17.7" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="16.7" r="2" fill="#666"/><circle cx="55.0" cy="10.9" r="2" fill="#666"/><circle cx="72.3" cy="6.3" r="2" fill="#666"/><circle cx="89.7" cy="4.7" r="2" fill="#666"/><circle cx="107.0" cy="3.0" r="2" fill="#666"/></svg></td></tr><tr><td class="cat-cell" rowspan="1">s1存量</td><td class="name-cell">s1存量</td><td class="tgt-cell">80</td><td><span class="cpd-up">+2</span></td><td><span class="cpd-down">-25</span></td><td><strong>55</strong></td><td>53</td><td>59</td><td>61</td><td>57</td><td>47</td><td>58</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 7.7 L 20.3 25.0 L 37.7 9.3 L 55.0 3.0 L 72.3 6.1 L 89.7 15.6 L 107.0 12.4" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="7.7" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="9.3" r="2" fill="#666"/><circle cx="55.0" cy="3.0" r="2" fill="#666"/><circle cx="72.3" cy="6.1" r="2" fill="#666"/><circle cx="89.7" cy="15.6" r="2" fill="#666"/><circle cx="107.0" cy="12.4" r="2" fill="#666"/></svg></td></tr><tr><td class="cat-cell" rowspan="1">s1双技能</td><td class="name-cell">s1双技能</td><td class="tgt-cell">80</td><td><span class="cpd-up">+3</span></td><td><span class="cpd-up">+14</span></td><td><strong>94</strong></td><td>91</td><td>91</td><td>94</td><td>94</td><td>101</td><td>116</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 3.0 L 20.3 16.2 L 37.7 22.4 L 55.0 22.4 L 72.3 25.0 L 89.7 25.0 L 107.0 22.4" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="3.0" r="2" fill="#666"/><circle cx="20.3" cy="16.2" r="2" fill="#666"/><circle cx="37.7" cy="22.4" r="2" fill="#666"/><circle cx="55.0" cy="22.4" r="2" fill="#666"/><circle cx="72.3" cy="25.0" r="2" fill="#666"/><circle cx="89.7" cy="25.0" r="2" fill="#666"/><circle cx="107.0" cy="22.4" r="2" fill="#666"/></svg></td></tr><tr><td class="cat-cell" rowspan="3">s2转接</td><td class="name-cell">整体</td><td class="tgt-cell">60</td><td><span class="cpd-up">-1</span></td><td><span class="cpd-up">-2</span></td><td><strong>58</strong></td><td>59</td><td>54</td><td>51</td><td>42</td><td>38</td><td>49</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 13.5 L 20.3 25.0 L 37.7 20.8 L 55.0 11.4 L 72.3 8.2 L 89.7 3.0 L 107.0 4.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="13.5" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="20.8" r="2" fill="#666"/><circle cx="55.0" cy="11.4" r="2" fill="#666"/><circle cx="72.3" cy="8.2" r="2" fill="#666"/><circle cx="89.7" cy="3.0" r="2" fill="#666"/><circle cx="107.0" cy="4.0" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">催收</td><td class="tgt-cell">60</td><td><span class="cpd-down">+2</span></td><td><span class="cpd-up">-1</span></td><td><strong>59</strong></td><td>57</td><td>49</td><td>46</td><td>37</td><td>33</td><td>45</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 14.8 L 20.3 25.0 L 37.7 21.6 L 55.0 14.0 L 72.3 11.5 L 89.7 4.7 L 107.0 3.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="14.8" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="21.6" r="2" fill="#666"/><circle cx="55.0" cy="14.0" r="2" fill="#666"/><circle cx="72.3" cy="11.5" r="2" fill="#666"/><circle cx="89.7" cy="4.7" r="2" fill="#666"/><circle cx="107.0" cy="3.0" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">非催</td><td class="tgt-cell">60</td><td><span class="cpd-up">-3</span></td><td><span class="cpd-up">-3</span></td><td><strong>57</strong></td><td>60</td><td>57</td><td>54</td><td>47</td><td>46</td><td>55</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 10.9 L 20.3 25.0 L 37.7 23.4 L 55.0 12.4 L 72.3 7.7 L 89.7 3.0 L 107.0 7.7" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="10.9" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="23.4" r="2" fill="#666"/><circle cx="55.0" cy="12.4" r="2" fill="#666"/><circle cx="72.3" cy="7.7" r="2" fill="#666"/><circle cx="89.7" cy="3.0" r="2" fill="#666"/><circle cx="107.0" cy="7.7" r="2" fill="#666"/></svg></td></tr><tr><td class="cat-cell" rowspan="4">工单组</td><td class="name-cell">工单组整体</td><td class="tgt-cell">-</td><td><span class="cpd-up">+2</span></td><td>-</td><td><strong>36</strong></td><td>34</td><td>30</td><td>40</td><td>36</td><td>26</td><td>32</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 15.6 L 20.3 25.0 L 37.7 9.3 L 55.0 3.0 L 72.3 18.7 L 89.7 12.4 L 107.0 9.3" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="15.6" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="9.3" r="2" fill="#666"/><circle cx="55.0" cy="3.0" r="2" fill="#666"/><circle cx="72.3" cy="18.7" r="2" fill="#666"/><circle cx="89.7" cy="12.4" r="2" fill="#666"/><circle cx="107.0" cy="9.3" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">s2非催工单</td><td class="tgt-cell">34</td><td><span class="cpd-up">+2</span></td><td><span class="cpd-up">+1</span></td><td><strong>35</strong></td><td>33</td><td>28</td><td>42</td><td>36</td><td>25</td><td>34</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 13.4 L 20.3 25.0 L 37.7 10.8 L 55.0 3.0 L 72.3 21.1 L 89.7 14.6 L 107.0 12.1" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="13.4" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="10.8" r="2" fill="#666"/><circle cx="55.0" cy="3.0" r="2" fill="#666"/><circle cx="72.3" cy="21.1" r="2" fill="#666"/><circle cx="89.7" cy="14.6" r="2" fill="#666"/><circle cx="107.0" cy="12.1" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">s3非催工单</td><td class="tgt-cell">34</td><td><span class="cpd-up">+1</span></td><td><span class="cpd-up">+2</span></td><td><strong>36</strong></td><td>35</td><td>32</td><td>38</td><td>39</td><td>26</td><td>28</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 21.6 L 20.3 25.0 L 37.7 3.0 L 55.0 4.7 L 72.3 14.8 L 89.7 9.8 L 107.0 8.1" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="21.6" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="3.0" r="2" fill="#666"/><circle cx="55.0" cy="4.7" r="2" fill="#666"/><circle cx="72.3" cy="14.8" r="2" fill="#666"/><circle cx="89.7" cy="9.8" r="2" fill="#666"/><circle cx="107.0" cy="8.1" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">s3催收工单</td><td class="tgt-cell">41</td><td><span class="cpd-up">+6</span></td><td><span class="cpd-up">+3</span></td><td><strong>44</strong></td><td>38</td><td>34</td><td>35</td><td>33</td><td>28</td><td>30</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 22.2 L 20.3 25.0 L 37.7 18.1 L 55.0 15.4 L 72.3 16.8 L 89.7 11.2 L 107.0 3.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="22.2" r="2" fill="#666"/><circle cx="20.3" cy="25.0" r="2" fill="#666"/><circle cx="37.7" cy="18.1" r="2" fill="#666"/><circle cx="55.0" cy="15.4" r="2" fill="#666"/><circle cx="72.3" cy="16.8" r="2" fill="#666"/><circle cx="89.7" cy="11.2" r="2" fill="#666"/><circle cx="107.0" cy="3.0" r="2" fill="#666"/></svg></td></tr><tr><td class="cat-cell" rowspan="4">12378</td><td class="name-cell">12378整体</td><td class="tgt-cell">-</td><td><span class="cpd-up">+9</span></td><td>-</td><td><strong>27</strong></td><td>18</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 25.0 L 20.3 3.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="25.0" r="2" fill="#666"/><circle cx="20.3" cy="3.0" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">12378话务</td><td class="tgt-cell">-</td><td><span class="cpd-up">+13</span></td><td>-</td><td><strong>31</strong></td><td>18</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 25.0 L 20.3 3.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="25.0" r="2" fill="#666"/><circle cx="20.3" cy="3.0" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">12378工单</td><td class="tgt-cell">-</td><td><span class="cpd-up">+3</span></td><td>-</td><td><strong>24</strong></td><td>21</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 25.0 L 20.3 3.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="25.0" r="2" fill="#666"/><circle cx="20.3" cy="3.0" r="2" fill="#666"/></svg></td></tr><tr><td class="name-cell">12378回访</td><td class="tgt-cell">-</td><td><span class="cpd-up">+11</span></td><td>-</td><td><strong>19</strong></td><td>8</td><td>-</td><td>-</td><td>-</td><td>-</td><td>-</td><td><svg width="110" height="28" style="display:block;margin:0 auto;"><path d="M 3.0 25.0 L 20.3 3.0" fill="none" stroke="#666" stroke-width="1.5"/><circle cx="3.0" cy="25.0" r="2" fill="#666"/><circle cx="20.3" cy="3.0" r="2" fill="#666"/></svg></td></tr></tbody>
+</table>
+  </div>
+</div>
+
+<script>
+const monthData = [{"cat": "部门KPI", "dist": "投诉类", "name": "外诉率", "weight": "30%", "target": "0.140%", "m7": "0.170%", "m7_meet": false, "m6": "0.172%", "m6_meet": false, "m5": "0.106%", "m5_meet": true, "full1": "0.195%", "full1_meet": false, "full2": "0.212%", "full2_meet": false, "full3": "0.236%", "full3_meet": false, "full4": "0.212%", "full4_meet": false, "full5": "0.113%", "full5_meet": true, "full6": "0.164%", "full6_meet": false, "diff76": "0.003%", "diff76_cls": "down", "diff_tgt": "+0.030%", "diff_tgt_cls": "over", "is_first_in_cat": true, "is_first_in_dist": true, "cat_span": 6, "dist_span": 2}, {"cat": "部门KPI", "dist": "投诉类", "name": "重渠投诉量（不含北互金）", "weight": "20%", "target": "1,417", "m7": "3,367", "m7_meet": false, "m6": "3,444", "m6_meet": false, "m5": "3,836", "m5_meet": false, "full1": "3,904", "full1_meet": false, "full2": "3,836", "full2_meet": false, "full3": "4,092", "full3_meet": false, "full4": "2,992", "full4_meet": false, "full5": "1,549", "full5_meet": true, "full6": "2,176", "full6_meet": true, "diff76": "77", "diff76_cls": "down", "diff_tgt": "+1,922", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "部门KPI", "dist": "运营类", "name": "7天外溢率(闭环)", "weight": "15%", "target": "0.34%", "m7": "0.74%", "m7_meet": false, "m6": "0.63%", "m6_meet": false, "m5": "0.63%", "m5_meet": false, "full1": "0.61%", "full1_meet": false, "full2": "0.61%", "full2_meet": false, "full3": "0.64%", "full3_meet": false, "full4": "0.59%", "full4_meet": false, "full5": "0.39%", "full5_meet": false, "full6": "0.41%", "full6_meet": false, "diff76": "+0.12%", "diff76_cls": "up", "diff_tgt": "+0.40%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 2}, {"cat": "部门KPI", "dist": "运营类", "name": "重渠7天重复投诉率(闭环)（不含北互金）", "weight": "15%", "target": "16.00%", "m7": "28.13%", "m7_meet": false, "m6": "30.71%", "m6_meet": false, "m5": "29.81%", "m5_meet": false, "full1": "30.75%", "full1_meet": false, "full2": "28.42%", "full2_meet": false, "full3": "19.63%", "full3_meet": false, "full4": "19.86%", "full4_meet": false, "full5": "16.46%", "full5_meet": false, "full6": "17.88%", "full6_meet": true, "diff76": "2.58%", "diff76_cls": "down", "diff_tgt": "+12.13%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "部门KPI", "dist": "效能类", "name": "5天关单率(闭环)", "weight": "10%", "target": "95.00%", "m7": "97.50%", "m7_meet": true, "m6": "98.29%", "m6_meet": true, "m5": "98.21%", "m5_meet": true, "full1": "98.51%", "full1_meet": true, "full2": "97.90%", "full2_meet": true, "full3": "96.18%", "full3_meet": true, "full4": "97.59%", "full4_meet": true, "full5": "99.26%", "full5_meet": true, "full6": "99.30%", "full6_meet": true, "diff76": "0.79%", "diff76_cls": "down", "diff_tgt": "+2.50%", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 2}, {"cat": "部门KPI", "dist": "效能类", "name": "热线20s接起率", "weight": "10%", "target": "95.00%", "m7": "98.72%", "m7_meet": true, "m6": "98.73%", "m6_meet": true, "m5": "96.59%", "m5_meet": true, "full1": "98.76%", "full1_meet": true, "full2": "96.95%", "full2_meet": true, "full3": "96.11%", "full3_meet": true, "full4": "96.19%", "full4_meet": true, "full5": "98.83%", "full5_meet": true, "full6": "99.45%", "full6_meet": true, "diff76": "0.01%", "diff76_cls": "down", "diff_tgt": "+3.72%", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "观测指标", "dist": "投诉类", "name": "外诉量", "weight": "-", "target": "11,643", "m7": "13,513", "m7_meet": false, "m6": "13,722", "m6_meet": false, "m5": "16,881", "m5_meet": false, "full1": "15,505", "full1_meet": false, "full2": "16,881", "full2_meet": false, "full3": "18,722", "full3_meet": false, "full4": "16,680", "full4_meet": false, "full5": "8,796", "full5_meet": true, "full6": "12,748", "full6_meet": false, "diff76": "209", "diff76_cls": "down", "diff_tgt": "+1,982", "diff_tgt_cls": "over", "is_first_in_cat": true, "is_first_in_dist": true, "cat_span": 5, "dist_span": 2}, {"cat": "观测指标", "dist": "投诉类", "name": "重渠投诉率（不含北互金）", "weight": "-", "target": "0.017%", "m7": "0.042%", "m7_meet": false, "m6": "0.043%", "m6_meet": false, "m5": "0.024%", "m5_meet": false, "full1": "0.049%", "full1_meet": false, "full2": "0.048%", "full2_meet": false, "full3": "0.052%", "full3_meet": false, "full4": "0.038%", "full4_meet": false, "full5": "0.020%", "full5_meet": true, "full6": "0.028%", "full6_meet": true, "diff76": "0.001%", "diff76_cls": "down", "diff_tgt": "+0.024%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": false}, {"cat": "观测指标", "dist": "运营类", "name": "黑猫曝光率", "weight": "-", "target": "14.77%", "m7": "29.66%", "m7_meet": false, "m6": "28.17%", "m6_meet": false, "m5": "26.89%", "m5_meet": false, "full1": "27.77%", "full1_meet": false, "full2": "27.67%", "full2_meet": false, "full3": "31.00%", "full3_meet": false, "full4": "26.12%", "full4_meet": false, "full5": "19.26%", "full5_meet": false, "full6": "20.54%", "full6_meet": false, "diff76": "+1.49%", "diff76_cls": "up", "diff_tgt": "+14.89%", "diff_tgt_cls": "over", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}, {"cat": "观测指标", "dist": "效能类", "name": "文本接起率", "weight": "-", "target": "98.00%", "m7": "99.94%", "m7_meet": true, "m6": "99.96%", "m6_meet": true, "m5": "99.71%", "m5_meet": true, "full1": "99.95%", "full1_meet": true, "full2": "99.74%", "full2_meet": true, "full3": "99.87%", "full3_meet": true, "full4": "98.19%", "full4_meet": true, "full5": "99.97%", "full5_meet": true, "full6": "99.63%", "full6_meet": true, "diff76": "0.02%", "diff76_cls": "down", "diff_tgt": "+1.94%", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}, {"cat": "观测指标", "dist": "监管维护", "name": "监管约谈次数", "weight": "-", "target": "0", "m7": "0", "m7_meet": true, "m6": "0", "m6_meet": true, "m5": "0", "m5_meet": true, "full1": "0", "full1_meet": true, "full2": "0", "full2_meet": true, "full3": "0", "full3_meet": true, "full4": "1", "full4_meet": false, "full5": "0", "full5_meet": true, "full6": "0", "full6_meet": true, "diff76": "0", "diff76_cls": "", "diff_tgt": "0", "diff_tgt_cls": "good", "is_first_in_cat": false, "is_first_in_dist": true, "dist_span": 1}];
+const weekData = [{"cat":"部门KPI","dist":"投诉类","name":"外诉率","w0":"0.043%","w1":"0.050%","w2":"0.038%","w3":"0.046%","w4":"0.043%","w5":"0.048%","w6":"0.049%","w7":"0.047%","wow":"-2.839%","wow_cls":"down","wow_abs":"-0.0014%","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 16.1 L 17.9 3.0 L 32.7 25.0 L 47.6 11.3 L 62.4 15.7 L 77.3 7.2 L 92.1 6.0 L 107.0 8.5\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"16.1\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"11.3\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"15.7\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"7.2\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"6.0\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"8.5\" r=\"2\" fill=\"#666\"/></svg>","trend":"↑上升","trend_cls":"up","is_first_in_cat":true,"is_first_in_dist":true,"cat_span":6,"dist_span":2},{"cat":"部门KPI","dist":"投诉类","name":"重渠投诉量（不含北互金）","w0":"779","w1":"1,105","w2":"724","w3":"841","w4":"998","w5":"1,001","w6":"919","w7":"904","wow":"-2%","wow_cls":"down","wow_abs":"-15","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 21.8 L 17.9 3.0 L 32.7 25.0 L 47.6 18.2 L 62.4 9.2 L 77.3 9.0 L 92.1 13.7 L 107.0 14.6\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"21.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"18.2\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"9.2\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"9.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"13.7\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"14.6\" r=\"2\" fill=\"#666\"/></svg>","trend":"↑上升","trend_cls":"up","is_first_in_cat":false,"is_first_in_dist":false,"cat_span":6,"dist_span":2},{"cat":"部门KPI","dist":"效能类","name":"热线20s接起率","w0":"99.24%","w1":"98.08%","w2":"98.61%","w3":"99.26%","w4":"98.62%","w5":"98.35%","w6":"99.22%","w7":"98.66%","wow":"-0.57%","wow_cls":"down","wow_abs":"-0.567%","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 3.5 L 17.9 25.0 L 32.7 15.0 L 47.6 3.0 L 62.4 14.9 L 77.3 20.0 L 92.1 3.7 L 107.0 14.2\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"3.5\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"15.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"14.9\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"20.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"3.7\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"14.2\" r=\"2\" fill=\"#666\"/></svg>","trend":"↓下降","trend_cls":"down","is_first_in_cat":false,"is_first_in_dist":true,"cat_span":6,"dist_span":2},{"cat":"部门KPI","dist":"效能类","name":"5天关单率(闭环)","w0":"98.26%","w1":"98.09%","w2":"98.54%","w3":"99.15%","w4":"97.70%","w5":"96.94%","w6":"98.12%","w7":"98.18%","wow":"+0.05%","wow_cls":"up","wow_abs":"0.053%","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 11.8 L 17.9 13.5 L 32.7 9.1 L 47.6 3.0 L 62.4 17.4 L 77.3 25.0 L 92.1 13.2 L 107.0 12.7\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"11.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"13.5\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"9.1\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"17.4\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"13.2\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"12.7\" r=\"2\" fill=\"#666\"/></svg>","trend":"↓下降","trend_cls":"down","is_first_in_cat":false,"is_first_in_dist":false,"dist_span":2,"cat_span":6},{"cat":"部门KPI","dist":"运营类","name":"7天外溢率(闭环)","w0":"0.74%","w1":"0.71%","w2":"0.66%","w3":"0.74%","w4":"0.74%","w5":"0.86%","w6":"0.89%","w7":"-","wow":"-","wow_cls":"","wow_abs":"-","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 17.2 L 17.9 20.3 L 32.7 25.0 L 47.6 17.6 L 62.4 17.3 L 77.3 6.7 L 92.1 3.0\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"17.2\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"20.3\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"17.6\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"17.3\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"6.7\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"3.0\" r=\"2\" fill=\"#666\"/></svg>","trend":"-","trend_cls":"","is_first_in_cat":false,"is_first_in_dist":true,"dist_span":2,"cat_span":6},{"cat":"部门KPI","dist":"运营类","name":"重渠7天重复投诉率(闭环)（不含北互金）","w0":"31.96%","w1":"31.25%","w2":"26.42%","w3":"32.34%","w4":"29.68%","w5":"28.84%","w6":"27.19%","w7":"-","wow":"-","wow_cls":"","wow_abs":"-","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 4.4 L 17.9 7.1 L 32.7 25.0 L 47.6 3.0 L 62.4 12.9 L 77.3 16.0 L 92.1 22.1\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"4.4\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"7.1\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"12.9\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"16.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"22.1\" r=\"2\" fill=\"#666\"/></svg>","trend":"-","trend_cls":"","is_first_in_cat":false,"is_first_in_dist":false,"cat_span":6,"dist_span":2},{"cat":"观测指标","dist":"投诉类","name":"外诉量","w0":"3,429","w1":"4,007","w2":"3,035","w3":"3,642","w4":"3,447","w5":"3,820","w6":"3,874","w7":"3,764","wow":"-3%","wow_cls":"down","wow_abs":"-110","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 16.1 L 17.9 3.0 L 32.7 25.0 L 47.6 11.3 L 62.4 15.7 L 77.3 7.2 L 92.1 6.0 L 107.0 8.5\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"16.1\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"11.3\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"15.7\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"7.2\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"6.0\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"8.5\" r=\"2\" fill=\"#666\"/></svg>","trend":"↑上升","trend_cls":"up","is_first_in_cat":true,"is_first_in_dist":true,"cat_span":4,"dist_span":2},{"cat":"观测指标","dist":"投诉类","name":"重渠投诉率（不含北互金）","w0":"0.010%","w1":"0.014%","w2":"0.009%","w3":"0.011%","w4":"0.013%","w5":"0.013%","w6":"0.012%","w7":"0.011%","wow":"-1.632%","wow_cls":"down","wow_abs":"-0.0002%","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 21.8 L 17.9 3.0 L 32.7 25.0 L 47.6 18.2 L 62.4 9.2 L 77.3 9.0 L 92.1 13.7 L 107.0 14.6\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"21.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"18.2\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"9.2\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"9.0\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"13.7\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"14.6\" r=\"2\" fill=\"#666\"/></svg>","trend":"↑上升","trend_cls":"up","is_first_in_cat":false,"is_first_in_dist":false,"cat_span":4,"dist_span":2},{"cat":"观测指标","dist":"效能类","name":"文本接起率","w0":"100.00%","w1":"99.92%","w2":"99.98%","w3":"99.92%","w4":"99.89%","w5":"99.94%","w6":"99.97%","w7":"99.99%","wow":"+0.02%","wow_cls":"up","wow_abs":"0.020%","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 3.0 L 17.9 18.7 L 32.7 6.3 L 47.6 19.3 L 62.4 25.0 L 77.3 15.2 L 92.1 8.8 L 107.0 4.7\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"18.7\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"6.3\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"19.3\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"25.0\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"15.2\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"8.8\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"4.7\" r=\"2\" fill=\"#666\"/></svg>","trend":"↓下降","trend_cls":"down","is_first_in_cat":false,"is_first_in_dist":true,"dist_span":1,"cat_span":4},{"cat":"观测指标","dist":"运营类","name":"黑猫曝光率","w0":"27.24%","w1":"29.04%","w2":"27.64%","w3":"26.85%","w4":"32.59%","w5":"30.40%","w6":"26.99%","w7":"1.21%","wow":"-11.21%","wow_cls":"down","wow_abs":"-3.407%","sparkline":"<svg width=\"110\" height=\"28\" style=\"display:block;margin:0 auto;max-width:100%;\"><path d=\"M 3.0 6.8 L 17.9 5.5 L 32.7 6.5 L 47.6 7.0 L 62.4 3.0 L 77.3 4.5 L 92.1 6.9 L 107.0 25.0\" fill=\"none\" stroke=\"#666\" stroke-width=\"1.5\"/><circle cx=\"3.0\" cy=\"6.8\" r=\"2\" fill=\"#666\"/><circle cx=\"17.9\" cy=\"5.5\" r=\"2\" fill=\"#666\"/><circle cx=\"32.7\" cy=\"6.5\" r=\"2\" fill=\"#666\"/><circle cx=\"47.6\" cy=\"7.0\" r=\"2\" fill=\"#666\"/><circle cx=\"62.4\" cy=\"3.0\" r=\"2\" fill=\"#666\"/><circle cx=\"77.3\" cy=\"4.5\" r=\"2\" fill=\"#666\"/><circle cx=\"92.1\" cy=\"6.9\" r=\"2\" fill=\"#666\"/><circle cx=\"107.0\" cy=\"25.0\" r=\"2\" fill=\"#666\"/></svg>","trend":"↓下降","trend_cls":"down","is_first_in_cat":false,"is_first_in_dist":true,"dist_span":1,"cat_span":4}];
+const monthConc = ["<span class=\"bullet-red\">外诉率</span>：7月MTD 0.170%，超标21%（目标0.140%）；6月MTD 0.172%。", "<span class=\"bullet-red\">重渠投诉量（不含北互金）</span>：7月MTD 3,367件，超标133倍（目标1,445件）。", "<span class=\"bullet-yellow\">7天外溢率(闭环)</span>：7月MTD 0.74%，↑上涨（6月0.63%，目标0.34%），外溢管控压力加大。", "<span class=\"bullet-green\">重渠7天重复投诉率(闭环)（不含北互金）</span>：7月MTD 28.13%，↓下降（6月30.71%，目标16.00%），趋势向好。", "<span class=\"bullet-green\">5天关单率(闭环)</span>：7月MTD 97.50%，6月98.29%，均高于目标95.00%。", "<span class=\"bullet-green\">热线20s接起率</span>：7月MTD 98.72%，持续高于目标95.00%，承接能力稳定。", "<span class=\"bullet-yellow\">黑猫曝光率</span>：7月MTD 29.66%，↑走高（6月28.17%），需重点关注。"];
+const weekLabelsFull = ["2026年第23周", "2026年第24周", "2026年第25周", "2026年第26周", "2026年第27周", "2026年第28周", "2026年第29周", "2026年第30周"];
+const weekQj = ["2026-06-01~2026-06-07", "2026-06-08~2026-06-14", "2026-06-15~2026-06-21", "2026-06-22~2026-06-28", "2026-06-29~2026-07-05", "2026-07-06~2026-07-12", "2026-07-13~2026-07-19", "2026-07-20~2026-07-26"];
+const weekConc = ["<span class=\"bullet-yellow\">7天外溢率(闭环)</span>：W29 0.89%，较W28 0.86% （W30 7天窗口未满，取W29）。", "<span class=\"bullet-green\">重渠7天重复投诉率(闭环)（不含北互金）</span>：W29 27.19%，较W28 28.84% （W30 7天窗口未满，取W29）。", "<span class=\"bullet-red\">外诉率</span>：W30 0.047%，较W29 0.049% -2.839%。", "<span class=\"bullet-yellow\">黑猫曝光率</span>：W29 26.99%，较W28 30.40% -11.21%（W30数据有滞后，未纳入）。", "<span class=\"bullet-green\">5天关单率(闭环)</span>：W30 98.18%，较W29 +0.05%，保持在95.00%目标以上。"];
+
+
+// ========== 月度表格（含rowspan） ==========
+function wrapName(name) {
+    if (name.includes('（不含北互金）')) {
+        return name.replace('（不含北互金）', '<span class="suffix">（不含北互金）</span>');
+    }
+    return name;
+}
+
+function renderMonthTable() {
+    const th = ['考核类型', '指标分类', '指标名称', '权重', '月目标', '26年7月MTD达成',
+                '26年6月MTD达成', '26年5月MTD达成', '26年6月全月达成', '26年5月全月达成',
+                '26年4月全月达成', '26年3月全月达成', '26年2月全月达成', '26年1月全月达成'];
+    let html = '<thead><tr>';
+    th.forEach(c => html += '<th>' + c + '</th>');
+    html += '</tr></thead><tbody>';
+
+    // 大类之间的视觉分隔
+    let lastCat = '';
+    monthData.forEach((r, i) => {
+        if (lastCat && r.cat !== lastCat) {
+            html += '<tr class="blank-row"><td colspan="15"></td></tr>';
+        }
+        lastCat = r.cat;
+
+        html += '<tr>';
+        if (r.is_first_in_cat) {
+            html += '<td class="cat-cell" rowspan="' + r.cat_span + '">' + r.cat + '</td>';
+        }
+        if (r.is_first_in_dist) {
+            html += '<td class="dist-cell col-dist" rowspan="' + r.dist_span + '">' + r.dist + '</td>';
+        }
+        html += '<td class="name-cell col-name">' + wrapName(r.name) + '</td>';
+        html += '<td class="col-weight">' + r.weight + '</td>';
+        html += '<td class="col-target">' + r.target + '</td>';
+        html += '<td' + (r.m7_meet ? ' class="meet"' : '') + '>' + r.m7 + '</td>';
+        html += '<td' + (r.m6_meet ? ' class="meet"' : '') + '>' + r.m6 + '</td>';
+        html += '<td' + (r.m5_meet ? ' class="meet"' : '') + '>' + r.m5 + '</td>';
+        html += '<td' + (r.full1_meet ? ' class="meet"' : '') + '>' + r.full1 + '</td>';
+        html += '<td' + (r.full2_meet ? ' class="meet"' : '') + '>' + r.full2 + '</td>';
+        html += '<td' + (r.full3_meet ? ' class="meet"' : '') + '>' + r.full3 + '</td>';
+        html += '<td' + (r.full4_meet ? ' class="meet"' : '') + '>' + r.full4 + '</td>';
+        html += '<td' + (r.full5_meet ? ' class="meet"' : '') + '>' + r.full5 + '</td>';
+        html += '<td' + (r.full6_meet ? ' class="meet"' : '') + '>' + r.full6 + '</td>';
+        html += '</tr>';
+    });
+    html += '</tbody>';
+    document.getElementById('monthTable').innerHTML = html;
+}
+
+// ========== 月度结论 ==========
+function renderMonthConclusions() {
+    let html = '';
+    monthConc.forEach(c => html += '<div class="item">• ' + c + '</div>');
+    document.getElementById('monthConclusions').innerHTML = html;
+}
+
+// 周表指标方向判断：越低越好 vs 越高越好
+function isLowerBetterWeek(name) {
+    const keywords = ['外诉率', '重渠投诉', '外溢率', '重复投诉率', '黑猫曝光率', '外诉量'];
+    return keywords.some(k => name.includes(k));
+}
+function weekColorCls(rawCls, name) {
+    if (!rawCls) return '';
+    const lower = isLowerBetterWeek(name);
+    // rawCls 是数值变化的涨跌：up=涨, down=跌
+    if (lower) {
+        return rawCls === 'up' ? 'bad' : 'good';
+    } else {
+        return rawCls === 'up' ? 'good' : 'bad';
+    }
+}
+
+// Week VS Week 涨幅/变化：整数不保留小数，非整数保留三位小数
+function fmtWowValue(str) {
+    if (!str || str === '-') return str;
+    const hasPercent = str.includes('%');
+    let sign = '', body = str.trim();
+    if (body.startsWith('+')) { sign = '+'; body = body.slice(1); }
+    else if (body.startsWith('-')) { sign = '-'; body = body.slice(1); }
+    body = body.replace(/,/g, '').replace(/%/g, '');
+    const num = parseFloat(body);
+    if (isNaN(num)) return str;
+    const rounded = Math.round(num);
+    if (Math.abs(num - rounded) < 1e-9) {
+        return sign + rounded.toLocaleString() + (hasPercent ? '%' : '');
+    }
+    return sign + num.toFixed(3) + (hasPercent ? '%' : '');
+}
+
+// ========== 周度表格（含rowspan） ==========
+function renderWeekTable() {
+    const displayWeeks = weekLabelsFull.slice().reverse(); // 2026年第29周 .. 2026年第22周
+    const displayQj = weekQj.slice().reverse();
+    const latestWeek = displayWeeks[0];
+    const latestQj = displayQj[0];
+    const idxMap = [7,6,5,4,3,2,1,0]; // displayWeeks[j] 对应后端 weekData 的 w* 索引
+
+    const row1 = ['考核类型', '指标分类', '指标名称', 'Week VS Week<br>涨幅', 'Week VS Week<br>变化', ...displayWeeks, '<span style="display:inline-block;width:120px;">趋势图</span>'];
+    const row2 = ['', '', '', latestQj, latestQj, ...displayQj, '<span style="font-size:10px;font-weight:400;white-space:nowrap;">（从左往右，由远到近）</span>'];
+
+    let html = '<thead>';
+    // 第一行表头
+    html += '<tr>';
+    row1.forEach((c, i) => {
+        if (i < 3) {
+            html += '<th rowspan="2">' + c + '</th>';
+        } else {
+            html += '<th>' + c + '</th>';
+        }
+    });
+    html += '</tr>';
+    // 第二行表头（日期区间 + 趋势图说明）
+    html += '<tr>';
+    for (let i = 3; i < row1.length; i++) {
+        html += '<th>' + row2[i] + '</th>';
+    }
+    html += '</tr>';
+    html += '</thead><tbody>';
+
+    let lastCat = '';
+    weekData.forEach((r, i) => {
+        if (lastCat && r.cat !== lastCat) {
+            html += '<tr class="blank-row"><td colspan="14"></td></tr>';
+        }
+        lastCat = r.cat;
+
+        html += '<tr>';
+        if (r.is_first_in_cat) {
+            html += '<td class="cat-cell" rowspan="' + r.cat_span + '">' + r.cat + '</td>';
+        }
+        if (r.is_first_in_dist) {
+            html += '<td class="dist-cell" rowspan="' + r.dist_span + '">' + r.dist + '</td>';
+        }
+        html += '<td class="name-cell">' + wrapName(r.name) + '</td>';
+        const wowColor = weekColorCls(r.wow_cls, r.name);
+        html += '<td class="' + wowColor + '">' + fmtWowValue(r.wow) + '</td>';
+        html += '<td class="' + wowColor + '">' + fmtWowValue(r.wow_abs) + '</td>';
+        idxMap.forEach(j => html += '<td>' + r['w' + j] + '</td>');
+        html += '<td style="width:120px; padding:4px;">' + (r.sparkline || '-') + '</td>';
+        html += '</tr>';
+    });
+    html += '</tbody>';
+    document.getElementById('weekTable').innerHTML = html;
+}
+
+// ========== 周度结论 ==========
+function renderWeekConclusions() {
+    let html = '';
+    weekConc.forEach(c => html += '<div class="item">• ' + c + '</div>');
+    document.getElementById('weekConclusions').innerHTML = html;
+}
+
+
+
+renderMonthTable();
+renderMonthConclusions();
+renderWeekTable();
+renderWeekConclusions();
+</script>
+
+</body>
+</html>
