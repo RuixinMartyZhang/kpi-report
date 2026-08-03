@@ -1,0 +1,4 @@
+# 只保留HTML报表，忽略其他所有文件
+*
+!*.html
+!.gitignore
