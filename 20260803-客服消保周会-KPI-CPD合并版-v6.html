@@ -300,10 +300,10 @@ function renderMonthConclusions() {
         "效能类指标均相对稳健。符合目标预期。"
     ];
     if (!items || items.length === 0) { el.innerHTML = ''; return; }
-    let html = '<strong style="font-size:14px;">▎月度结论</strong><br>';
+    let html = '';
     for (const item of items) {
         if (item === '') { continue; }
-        html += '<div class="item">' + item + '</div>';
+        html += '<div class="item" style="font-size:14px;">' + item + '</div>';
     }
     el.innerHTML = html;
 }
