@@ -87,7 +87,7 @@ tr:hover td { background: #f0f5ff; }
 </div>
 
 <div class="toc">
-  <a href="#sec1">一、(1) KPI月度结论</a>
+  <a href="#sec1">一、(1) KPI月度达成及周度趋势结论</a>
   <a href="#sec2">一、(2) 月度KPI达成</a>
   <a href="#sec3">一、(3) 周度趋势</a>
   <a href="#sec4">二、(1) CPD核心结论</a>
@@ -96,9 +96,9 @@ tr:hover td { background: #f0f5ff; }
 
 <div class="part-header">一、KPI达成表现</div>
 
-<!-- 一、KPI月度结论 -->
+<!-- 一、KPI月度达成及周度趋势结论 -->
 <div class="section" id="sec1">
-  <h2>一、(1) KPI月度结论</h2>
+  <h2>一、(1) KPI月度达成及周度趋势结论</h2>
   <div class="conclusion" id="weekConclusions" style="margin-top:0;"></div>
   <div class="conclusion" id="monthConclusions" style="margin-top:0;"></div>
 </div>
@@ -295,7 +295,10 @@ renderWeekConclusions();
 // ========== 结论渲染 ==========
 function renderMonthConclusions() {
     const el = document.getElementById('monthConclusions');
-    const items = ["8月MTD（仅1天数据）：达标 6 项，未达标 0 项。", "所有KPI指标均达标。", "", "7月全月闭环 vs 6月全月：", "  外诉率：0.213%，环比上升<span class='bullet-red'>+0.019%</span>", "  重渠投诉量（不含北互金）：4,421，环比上升<span class='bullet-red'>+517</span>", "  7天外溢率(闭环)：0.74%，环比上升<span class='bullet-red'>+0.13%</span>", "  重渠7天重复投诉率(闭环)（不含北互金）：28.67%，环比下降<span class='bullet-green'>2.05%</span>", "  5天关单率(闭环)：97.72%，环比下降<span class='bullet-red'>0.80%</span>", "  热线20s接起率：98.70%，环比下降<span class='bullet-red'>0.06%</span>", "  外诉量：16,995，环比上升<span class='bullet-red'>+1,490</span>", "  重渠投诉率（不含北互金）：0.055%，环比上升<span class='bullet-red'>+0.006%</span>", "  黑猫曝光率：30.46%，环比上升<span class='bullet-red'>+2.69%</span>", "  文本接起率：99.95%，环比下降<span class='bullet-red'>0.01%</span>"];
+    const items = [
+        "8月MTD首日6项KPI指标全部达标。",
+        "7月全月与周度趋势一致：投诉类指标（外诉率/量、重渠投诉）持续攀升，运营类指标（外溢率、黑猫曝光率）同步恶化，效能类指标（关单率、接起率）小幅下滑，仅重渠重复投诉率和文本接起率基本持平。"
+    ];
     if (!items || items.length === 0) { el.innerHTML = ''; return; }
     let html = '<strong style="font-size:14px;">▎月度结论</strong><br>';
     for (const item of items) {
@@ -307,7 +310,10 @@ function renderMonthConclusions() {
 
 function renderWeekConclusions() {
     const el = document.getElementById('weekConclusions');
-    const items = ["最新完整周 W31 vs W30：", "  <strong>变差</strong>（6项）：", "    外诉率：0.049%，环比上升<span class='bullet-red'>+0.002%</span>", "    重渠投诉量（不含北互金）：1,059，环比上升<span class='bullet-red'>+155</span>", "    热线20s接起率：98.65%，环比下降<span class='bullet-red'>0.01%</span>", "    外诉量：3,917，环比上升<span class='bullet-red'>+196</span>", "    重渠投诉率（不含北互金）：0.013%，环比上升<span class='bullet-red'>+0.002%</span>", "    文本接起率：99.99%，环比下降<span class='bullet-red'>0.00%</span>", "  <strong>变好</strong>（2项）：", "    5天关单率(闭环)：98.89%，环比上升<span class='bullet-green'>+0.66%</span>", "    黑猫曝光率：0.54%，环比下降<span class='bullet-green'>31.62%</span>"];
+    const items = [
+        "W31 vs W30：6项变差、2项变好。",
+        "趋势与月度一致：投诉类（外诉率/量、重渠投诉）周环比均上升，运营类压力持续，效能类关单率改善但接起率微降。"
+    ];
     if (!items || items.length === 0) { el.innerHTML = ''; return; }
     let html = '<strong style="font-size:14px;">▎周度趋势结论</strong><br>';
     for (const item of items) {
