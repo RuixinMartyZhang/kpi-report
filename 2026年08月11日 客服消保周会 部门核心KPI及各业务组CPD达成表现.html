@@ -231,8 +231,9 @@ function renderMonthTable() {
         // MTD列（动态）
         for (let j = 0; j < mtdLabels.length; j++) {
             if (j === 0 && r.mtd0_adjusted) {
-                // 8月MTD量指标：显示调整前/调整后（工作日日均归一化），不标绿底纹
-                html += '<td style="font-size:11px;line-height:1.5;">';
+                const isVol = r.name === '重渠投诉量（不含北互金）' || r.name === '外诉量';
+                const meetCls = (!isVol && r['mtd0_meet']) ? ' class="meet"' : '';
+                html += '<td style="font-size:11px;line-height:1.5;"' + meetCls + '>';
                 html += '<div>调整前 ' + r['mtd' + j] + '</div>';
                 html += '<div style="color:#2E75B5;font-weight:600;">调整后 ' + r.mtd0_adjusted + '</div>';
                 html += '</td>';
